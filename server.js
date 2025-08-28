@@ -9,13 +9,17 @@ app.use(express.json());     // ✅ Permet de lire les JSON dans req.body
 app.use(express.urlencoded({ extended: true })); // ✅ Supporte aussi les formulaires
 
 // ✅ Importer les routes
-const collectRoute = require("./routes/collect");
 const computeRoute = require("./routes/compute");
 const pagesRoute = require("./routes/pages");
+const analyzeRoute = require("./routes/analyze-site");
+const discoverRoute = require("./routes/discover");
+
 
 // ✅ Utiliser les routes
-app.use("/collect", collectRoute);
 app.use("/compute", computeRoute);
 app.use("/pages", pagesRoute);
+app.use("/analyze-site", analyzeRoute);
+app.use("/discover", discoverRoute);
+
 
 app.listen(PORT, () => console.log(`✅ Backend running on http://localhost:${PORT}`));
