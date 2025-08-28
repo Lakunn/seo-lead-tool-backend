@@ -1,25 +1,21 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const analyzeRoute = require('./routes/analyze-site');
+const reportRoute = require('./routes/generate-report');
+require('dotenv').config();
+
 
 const app = express();
-const PORT = 5000;
-
-app.use(cors());             // ✅ Autorise les requêtes cross-origin
-app.use(express.json());     // ✅ Permet de lire les JSON dans req.body
-app.use(express.urlencoded({ extended: true })); // ✅ Supporte aussi les formulaires
-
-// ✅ Importer les routes
-const computeRoute = require("./routes/compute");
-const pagesRoute = require("./routes/pages");
-const analyzeRoute = require("./routes/analyze-site");
-const discoverRoute = require("./routes/discover");
+app.use(cors());
+app.use(express.json());
 
 
-// ✅ Utiliser les routes
-app.use("/compute", computeRoute);
-app.use("/pages", pagesRoute);
-app.use("/analyze-site", analyzeRoute);
-app.use("/discover", discoverRoute);
+connectDB();
 
 
-app.listen(PORT, () => console.log(`✅ Backend running on http://localhost:${PORT}`));
+app.use('/analyze-site', analyzeRoute);
+app.use('/generate-report', reportRoute);
+
+
+app.listen(5000, () => console.log('✅ Backend running on http://localhost:5000'));
